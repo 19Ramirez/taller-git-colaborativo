@@ -47,7 +47,7 @@ jobs:
         with:
           context: .
           push: true
-          tags: ghcr.io/${{ github.repository }}/docker-currency:1.0.0
+          tags: ghcr.io/19ramirez/taller-git-colaborativo/docker-taller:1.0.0
         
       - name: 📤 Pasar stack.yml al servidor (landinga)
         uses: appleboy/scp-action@v1
@@ -74,10 +74,10 @@ jobs:
             echo "${{ secrets.GHCR_PAT }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
             
             echo "==> Descargando última versión de la imagen..."
-            docker pull ghcr.io/${{ github.repository }}/docker-currency:1.0.0
+            docker pull ghcr.io/${{ github.repository }}/docker-taller:1.0.0
 
-            echo "==> Desplegando stack divisas..."
-            docker stack deploy -c stack.yml divisas
+            echo "==> Desplegando stack taller..."
+            docker stack deploy -c stack.yml taller
             
             echo "==> Verificando estado del servicio..."
-            docker service ls | grep divisas
+            docker service ls | grep taller
