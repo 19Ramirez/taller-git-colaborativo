@@ -1,0 +1,35 @@
+version: '3.8'
+
+services:
+  app:
+    image: ghcr.io/19ramirez/docker-taller:1.0.0
+    networks:
+      - traefik-public
+    deploy:
+      replicas: 1
+      update_config:
+        parallelism: 1
+        delay: 10s
+      restart_policy:
+        condition: on-failure
+      labels:
+        - "traefik.enable=true"
+        # Configuración subdominio: taller.byronrm.com
+        - "traefik.http.routers.ramirez-taller-router.entrypoints=http"
+        - "traefik.http.routers.ramirez-taller-router.rule=Host(`taller.byronrm.com`)"
+        - "traefik.http.middlewares.ramirez-taller-redirect.redirectscheme.scheme=https"
+        - "traefik.http.routers.ramirez-taller-router.middlewares=ramirez-taller-redirect"
+        
+        - "traefik.http.routers.ramirez-taller-secure.entrypoints=https"
+        - "traefik.http.routers.ramirez-taller-secure.rule=Host(`taller.byronrm.com`)"
+        - "traefik.http.routers.ramirez-taller-secure.tls=true"
+        - "traefik.http.routers.ramirez-taller-secure.tls.certresolver=http"
+        - "traefik.http.routers.ramirez-taller-secure.service=ramirez-taller-service"
+        
+        # Traefik redirige el tráfico al puerto 5000 interno de tu Flask
+        - "traefik.http.services.ramirez-taller-service.loadbalancer.server.port=5000"
+        - "traefik.docker.network=traefik-public"
+
+networks:
+  traefik-public:
+    external: true
