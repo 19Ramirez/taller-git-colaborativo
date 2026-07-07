@@ -140,7 +140,7 @@ def conversor():
                 tasa = TASAS_CAMBIO.get(divisa_destino, 1.0)
                 calculo = monto * tasa
                 
-                if divisa_destino in ["COP", "MXN"]:
+                if divisa_destino in ["JPY", "COP", "MXN"]:
                     resultado = f"{calculo:,.2f}"
                 else:
                     resultado = f"{calculo:.2f}"
