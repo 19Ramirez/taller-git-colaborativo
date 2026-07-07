@@ -91,6 +91,7 @@ TEMPLATE_DIVISAS = """
         <select name="divisa_destino">
             <option value="EUR" {% if divisa_destino == 'EUR' %}selected{% endif %}>🇪🇺 EUR - Euro</option>
             <option value="MXN" {% if divisa_destino == 'MXN' %}selected{% endif %}>🇲🇽 MXN - Peso Mexicano</option>
+            <option value="JPY" {% if divisa_destino == 'JPY' %}selected{% endif %}>🇯🇵 JPY - Yen Japonés</option>
             <option value="COP" {% if divisa_destino == 'COP' %}selected{% endif %}>🇨🇴 COP - Peso Colombiano</option>
             <option value="GBP" {% if divisa_destino == 'GBP' %}selected{% endif %}>🇬🇧 GBP - Libra Esterlina</option>
             <option value="CAD" {% if divisa_destino == 'CAD' %}selected{% endif %}>🇨🇦 CAD - Dólar Canadiense</option>
@@ -120,6 +121,7 @@ TEMPLATE_DIVISAS = """
 TASAS_CAMBIO = {
     "EUR": 0.92,
     "MXN": 17.05,
+    "JPY": 150.00,
     "COP": 3950.00,
     "GBP": 0.79,
     "CAD": 1.35  # CAMBIO DOMENICA: Tasa de cambio agregada
@@ -139,9 +141,8 @@ def conversor():
             if monto_input:
                 monto = float(monto_input)
                 
-                # CAMBIO DOMENICA: Validación en el backend para montos menores o iguales a cero
-                if monto <= 0:
-                    resultado = "Error: El monto debe ser mayor a cero"
+                if divisa_destino in ["JPY", "COP", "MXN"]:
+                    resultado = f"{calculo:,.2f}"
                 else:
                     tasa = TASAS_CAMBIO.get(divisa_destino, 1.0)
                     calculo = monto * tasa
