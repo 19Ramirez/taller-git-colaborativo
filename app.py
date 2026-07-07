@@ -92,6 +92,7 @@ TEMPLATE_DIVISAS = """
             <option value="MXN" {% if divisa_destino == 'MXN' %}selected{% endif %}>🇲🇽 MXN - Peso Mexicano</option>
             <option value="COP" {% if divisa_destino == 'COP' %}selected{% endif %}>🇨🇴 COP - Peso Colombiano</option>
             <option value="GBP" {% if divisa_destino == 'GBP' %}selected{% endif %}>🇬🇧 GBP - Libra Esterlina</option>
+            <option value="CAD" {% if divisa_destino == 'CAD' %}selected{% endif %}>🇨🇦 CAD - Dólar Canadiense</option>
         </select>
         
         <button type="submit">Convertir Divisa</button>
