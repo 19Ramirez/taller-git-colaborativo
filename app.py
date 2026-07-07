@@ -5,6 +5,7 @@ app = Flask(__name__)
 
 VERSION = "1.0.0"
 
+# Diseño en HTML/CSS para un conversor de divisas moderno
 TEMPLATE_DIVISAS = """
 <!DOCTYPE html>
 <html lang="es">
@@ -84,7 +85,7 @@ TEMPLATE_DIVISAS = """
     
     <form method="POST">
         <label style="display:block; text-align:left; font-size:13px; color:#4a5568; font-weight:bold;">Monto en USD (Dólares):</label>
-        <input type="number" step="any" name="monto" placeholder="Ej. 100" value="{{ monto }}" min="0" required>
+        <input type="number" step="any" name="monto" placeholder="Ej. 100" value="{{ monto }}" required>
         
         <label style="display:block; text-align:left; font-size:13px; color:#4a5568; font-weight:bold; margin-top:10px;">Convertir a:</label>
         <select name="divisa_destino">
@@ -93,6 +94,7 @@ TEMPLATE_DIVISAS = """
             <option value="JPY" {% if divisa_destino == 'JPY' %}selected{% endif %}>🇯🇵 JPY - Yen Japonés</option>
             <option value="COP" {% if divisa_destino == 'COP' %}selected{% endif %}>🇨🇴 COP - Peso Colombiano</option>
             <option value="GBP" {% if divisa_destino == 'GBP' %}selected{% endif %}>🇬🇧 GBP - Libra Esterlina</option>
+            <option value="CAD" {% if divisa_destino == 'CAD' %}selected{% endif %}>🇨🇦 CAD - Dólar Canadiense</option>
         </select>
         
         <button type="submit">Convertir Divisa</button>
@@ -121,7 +123,8 @@ TASAS_CAMBIO = {
     "MXN": 17.05,
     "JPY": 150.00,
     "COP": 3950.00,
-    "GBP": 0.79
+    "GBP": 0.79,
+    "CAD": 1.35  # CAMBIO DOMENICA: Tasa de cambio agregada
 }
 
 @app.route("/", methods=["GET", "POST"])
@@ -137,13 +140,17 @@ def conversor():
             
             if monto_input:
                 monto = float(monto_input)
-                tasa = TASAS_CAMBIO.get(divisa_destino, 1.0)
-                calculo = monto * tasa
                 
                 if divisa_destino in ["JPY", "COP", "MXN"]:
                     resultado = f"{calculo:,.2f}"
                 else:
-                    resultado = f"{calculo:.2f}"
+                    tasa = TASAS_CAMBIO.get(divisa_destino, 1.0)
+                    calculo = monto * tasa
+                    
+                    if divisa_destino in ["COP", "MXN"]:
+                        resultado = f"{calculo:,.2f}"
+                    else:
+                        resultado = f"{calculo:.2f}"
                     
         except Exception as e:
             resultado = f"Error en los datos: {str(e)}"
