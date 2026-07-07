@@ -90,6 +90,7 @@ TEMPLATE_DIVISAS = """
         <select name="divisa_destino">
             <option value="EUR" {% if divisa_destino == 'EUR' %}selected{% endif %}>🇪🇺 EUR - Euro</option>
             <option value="MXN" {% if divisa_destino == 'MXN' %}selected{% endif %}>🇲🇽 MXN - Peso Mexicano</option>
+            <option value="JPY" {% if divisa_destino == 'JPY' %}selected{% endif %}>🇯🇵 JPY - Yen Japonés</option>
             <option value="COP" {% if divisa_destino == 'COP' %}selected{% endif %}>🇨🇴 COP - Peso Colombiano</option>
             <option value="GBP" {% if divisa_destino == 'GBP' %}selected{% endif %}>🇬🇧 GBP - Libra Esterlina</option>
         </select>
