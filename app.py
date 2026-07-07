@@ -118,6 +118,7 @@ TEMPLATE_DIVISAS = """
 TASAS_CAMBIO = {
     "EUR": 0.92,
     "MXN": 17.05,
+    "JPY": 150.00,
     "COP": 3950.00,
     "GBP": 0.79
 }
