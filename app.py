@@ -119,7 +119,9 @@ TASAS_CAMBIO = {
     "EUR": 0.92,
     "MXN": 17.05,
     "COP": 3950.00,
-    "GBP": 0.79
+    "GBP": 0.79,
+    "CAD": 1.35,
+
 }
 
 @app.route("/", methods=["GET", "POST"])
